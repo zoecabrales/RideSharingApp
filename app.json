@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "RideSharing",
+    "slug": "RideSharing",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
