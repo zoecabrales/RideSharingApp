@@ -15,7 +15,7 @@ import {
   faMapMarkerAlt,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import dummyRideRequests from "../components/dummyRideData"; // Import dummy ride data
+import dummyRideRequests from "../components/DummyRideData"; // Import dummy ride data
 import { useNavigation } from "@react-navigation/native";
 
 import { connect } from "react-redux";
@@ -23,7 +23,12 @@ import { setRideRequests } from "../redux/actions/rideRequestActions";
 
 const { width, height } = Dimensions.get("window");
 
-const HomeScreen = ({ rideRequests, setRideRequests }) => {
+const HomeScreen = ({
+  rideRequests,
+  setRideRequests,
+  pickupAddress,
+  destinationAddress,
+}) => {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,7 +36,11 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
   }, []);
 
   const handleMarkerPress = (request) => {
-    navigation.navigate("RideRequestDetails", { requestId: request.id });
+    navigation.navigate("RideRequestDetails", {
+      requestId: request.id,
+      pickupAddress: "123 Main St, City, Country",
+      destinationAddress: "456 Elm St, City, Country",
+    });
   };
 
   return (
