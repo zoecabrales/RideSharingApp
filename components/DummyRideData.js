@@ -1,7 +1,7 @@
 const dummyRideRequests = [
   {
     id: "1",
-    userId: "user1",
+    userId: "john_doe",
     driverId: null,
     pickupLocation: { latitude: 37.78825, longitude: -122.4324 },
     destination: { latitude: 37.79825, longitude: -122.4224 },
@@ -11,7 +11,7 @@ const dummyRideRequests = [
   },
   {
     id: "2",
-    userId: "user2",
+    userId: "alice_smith",
     driverId: null,
     pickupLocation: { latitude: 37.728, longitude: -122.372 },
     destination: { latitude: 37.738, longitude: -122.382 },
@@ -21,7 +21,7 @@ const dummyRideRequests = [
   },
   {
     id: "3",
-    userId: "user3",
+    userId: "bob_jones",
     driverId: null,
     pickupLocation: { latitude: 37.758, longitude: -122.452 },
     destination: { latitude: 37.768, longitude: -122.462 },
@@ -31,7 +31,7 @@ const dummyRideRequests = [
   },
   {
     id: "4",
-    userId: "user4",
+    userId: "emma_davis",
     driverId: null,
     pickupLocation: { latitude: 37.768, longitude: -122.422 },
     destination: { latitude: 37.778, longitude: -122.432 },
@@ -41,7 +41,7 @@ const dummyRideRequests = [
   },
   {
     id: "5",
-    userId: "user5",
+    userId: "michael_brown",
     driverId: null,
     pickupLocation: { latitude: 37.798, longitude: -122.472 },
     destination: { latitude: 37.788, longitude: -122.462 },
@@ -51,7 +51,7 @@ const dummyRideRequests = [
   },
   {
     id: "6",
-    userId: "user6",
+    userId: "sarah_taylor",
     driverId: null,
     pickupLocation: { latitude: 37.718, longitude: -122.402 },
     destination: { latitude: 37.728, longitude: -122.412 },
@@ -61,7 +61,7 @@ const dummyRideRequests = [
   },
   {
     id: "7",
-    userId: "user7",
+    userId: "william_clark",
     driverId: null,
     pickupLocation: { latitude: 37.748, longitude: -122.482 },
     destination: { latitude: 37.758, longitude: -122.472 },

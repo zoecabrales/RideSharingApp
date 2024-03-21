@@ -43,8 +43,12 @@ const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
       </Text>
       <View style={rideRequestStyles.infoContainer}>
         <View style={rideRequestStyles.textContainer}>
-          <Text style={rideRequestStyles.label}>Ride ID:</Text>
+          <Text style={rideRequestStyles.label}>Ride #:</Text>
           <Text style={rideRequestStyles.info}>{rideRequest.id}</Text>
+        </View>
+        <View style={rideRequestStyles.textContainer}>
+          <Text style={rideRequestStyles.label}>Passenger:</Text>
+          <Text style={rideRequestStyles.info}>{rideRequest.userId}</Text>
         </View>
         <View style={rideRequestStyles.textContainer}>
           <Text style={rideRequestStyles.label}>Status:</Text>

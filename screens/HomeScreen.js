@@ -1,10 +1,19 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Dimensions, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  StatusBar,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faMotorcycle,
   faMapMarkerAlt,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import dummyRideRequests from "../components/dummyRideData"; // Import dummy ride data
 import { useNavigation } from "@react-navigation/native";
@@ -27,7 +36,18 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <View style={styles.searchContainer}>
+        <TouchableOpacity style={styles.searchIconContainer}>
+          <FontAwesomeIcon icon={faSearch} color="gray" size={20} />
+        </TouchableOpacity>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Type a location for nearby bookings"
+        />
+      </View>
       <MapView
+        darkModeAllowed={false}
         style={styles.map}
         initialRegion={{
           latitude: 37.78825,
@@ -80,6 +100,28 @@ const styles = StyleSheet.create({
   map: {
     width: width,
     height: height,
+  },
+  searchContainer: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+    right: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    zIndex: 1,
+    elevation: 5,
+    borderRadius: 50,
+    opacity: 0.9,
+  },
+  searchIconContainer: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
   },
 });
 

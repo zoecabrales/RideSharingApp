@@ -14,7 +14,7 @@ Steps to run project
   - npm install or yarn install
 
 4. Run project
-  - expo start 
+  - expo start
   - if you get a warning due to SDK issues you can run "npx expo start"
 
 5. Its best advisable to have your iOS simulator or Android emulator up and running
