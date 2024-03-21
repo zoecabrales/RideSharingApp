@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
-import driverReducer from "./driverReducer";
-import rideRequestReducer from "../reducers";
+import rideRequestReducer from "./rideRequestReducer";
 
 const rootReducer = combineReducers({
-  driver: driverReducer,
   rideRequest: rideRequestReducer,
 });
 

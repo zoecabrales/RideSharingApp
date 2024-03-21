@@ -1,6 +1,19 @@
+// import React from "react";
+// import Navigation from "./navigation/Navigation"; // Update the path accordingly
+
+// export default function App() {
+//   return <Navigation />;
+// }
+
 import React from "react";
-import Navigation from "./navigation/Navigation"; // Update the path accordingly
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
+import Navigation from "./navigation/Navigation";
 
 export default function App() {
-  return <Navigation />;
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
 }

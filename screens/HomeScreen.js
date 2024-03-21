@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Dimensions, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -9,10 +9,12 @@ import {
 import dummyRideRequests from "../components/dummyRideData"; // Import dummy ride data
 import { useNavigation } from "@react-navigation/native";
 
+import { connect } from "react-redux";
+import { setRideRequests } from "../redux/actions/rideRequestActions";
+
 const { width, height } = Dimensions.get("window");
 
-const HomeScreen = () => {
-  const [rideRequests, setRideRequests] = useState([]);
+const HomeScreen = ({ rideRequests, setRideRequests }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -82,4 +84,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+const mapStateToProps = (state) => ({
+  rideRequests: state.rideRequest.rideRequests,
+});
+
+export default connect(mapStateToProps, { setRideRequests })(HomeScreen);
