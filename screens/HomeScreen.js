@@ -1,13 +1,6 @@
+// HomeScreen.js
 import React, { useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  StatusBar,
-} from "react-native";
+import { View, TextInput, StatusBar, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -15,24 +8,34 @@ import {
   faMapMarkerAlt,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import dummyRideRequests from "../components/DummyRideData"; // Import dummy ride data
-import { useNavigation } from "@react-navigation/native";
-
 import { connect } from "react-redux";
 import { setRideRequests } from "../redux/actions/rideRequestActions";
+import { useNavigation } from "@react-navigation/native";
+import { homeScreenStyles } from "./homeScreenStyles";
+import dummyRideRequests from "../components/DummyRideData";
 
-const { width, height } = Dimensions.get("window");
-
-const HomeScreen = ({
-  rideRequests,
-  setRideRequests,
-  pickupAddress,
-  destinationAddress,
-}) => {
+const HomeScreen = ({ rideRequests, setRideRequests }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setRideRequests(dummyRideRequests);
+    const fetchRideRequests = async () => {
+      try {
+        const response = await new Promise((resolve, reject) => {
+          resolve(dummyRideRequests);
+          reject(new Error("Failed to fetch ride requests"));
+        });
+
+        setRideRequests(response);
+      } catch (error) {
+        console.error("Error fetching ride requests:", error.message);
+        Alert.alert(
+          "Error",
+          "Failed to fetch ride requests. Please try again later."
+        );
+      }
+    };
+
+    fetchRideRequests();
   }, []);
 
   const handleMarkerPress = (request) => {
@@ -44,95 +47,75 @@ const HomeScreen = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={homeScreenStyles.container}>
       <StatusBar hidden={true} />
-      <View style={styles.searchContainer}>
-        <TouchableOpacity style={styles.searchIconContainer}>
-          <FontAwesomeIcon icon={faSearch} color="gray" size={20} />
-        </TouchableOpacity>
+      <View style={homeScreenStyles.searchContainer}>
+        <FontAwesomeIcon
+          icon={faSearch}
+          color="gray"
+          size={20}
+          style={homeScreenStyles.searchIconContainer}
+        />
         <TextInput
-          style={styles.searchInput}
+          style={homeScreenStyles.searchInput}
           placeholder="Type a location for nearby bookings"
         />
       </View>
-      <MapView
-        darkModeAllowed={false}
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      >
-        {rideRequests.map((request, index) => (
-          <React.Fragment key={`markerGroup_${index}`}>
-            {/* Marker for ride request */}
-            <Marker
-              key={`rideRequest_${request.id}`}
-              coordinate={{
-                latitude: request.pickupLocation.latitude,
-                longitude: request.pickupLocation.longitude,
-              }}
-              title="Ride Request"
-              description={`Status: ${request.status}`}
-              onPress={() => handleMarkerPress(request)}
-            >
-              <FontAwesomeIcon
-                icon={faMotorcycle}
-                color={request.status === "pending" ? "blue" : "red"}
-                size={30}
-              />
-            </Marker>
+      {rideRequests.length === 0 ? (
+        <View style={homeScreenStyles.emptyStateContainer}>
+          <Text style={homeScreenStyles.emptyStateText}>
+            No nearby ride requests found.
+          </Text>
+        </View>
+      ) : (
+        <MapView
+          darkModeAllowed={false}
+          style={homeScreenStyles.map}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          {rideRequests.map((request, index) => (
+            <React.Fragment key={`markerGroup_${index}`}>
+              <Marker
+                key={`rideRequest_${request.id}`}
+                coordinate={{
+                  latitude: request.pickupLocation.latitude,
+                  longitude: request.pickupLocation.longitude,
+                }}
+                title="Ride Request"
+                description={`Status: ${request.status}`}
+                onPress={() => handleMarkerPress(request)}
+              >
+                <FontAwesomeIcon
+                  icon={faMotorcycle}
+                  color={request.status === "pending" ? "blue" : "red"}
+                  size={30}
+                />
+              </Marker>
 
-            <Marker
-              key={`currentLocation_${request.id}`}
-              coordinate={{ latitude: 37.78125, longitude: -122.445 }} // Replace with your mock location
-              title="Current Location"
-              description="This is your current location"
-            >
-              <FontAwesomeIcon icon={faMapMarkerAlt} color="orange" size={30} />
-            </Marker>
-          </React.Fragment>
-        ))}
-      </MapView>
+              <Marker
+                key={`currentLocation_${request.id}`}
+                coordinate={{ latitude: 37.78125, longitude: -122.445 }} // Replace with your mock location
+                title="Current Location"
+                description="This is your current location"
+              >
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  color="orange"
+                  size={30}
+                />
+              </Marker>
+            </React.Fragment>
+          ))}
+        </MapView>
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  map: {
-    width: width,
-    height: height,
-  },
-  searchContainer: {
-    position: "absolute",
-    top: 60,
-    left: 20,
-    right: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    zIndex: 1,
-    elevation: 5,
-    borderRadius: 50,
-    opacity: 0.9,
-  },
-  searchIconContainer: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-  },
-});
 
 const mapStateToProps = (state) => ({
   rideRequests: state.rideRequest.rideRequests,
