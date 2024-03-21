@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Modal } from "react-native";
 import CustomButton from "../components/customButton";
-import dummyRideRequests from "../components/DummyRideData";
+import dummyRideRequests from "../components/dummyRideData";
 import { styles as rideRequestStyles } from "./rideRequestDetailsStyles"; // Import the styles
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
 
