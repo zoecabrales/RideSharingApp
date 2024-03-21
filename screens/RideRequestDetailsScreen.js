@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, Modal } from "react-native";
 import CustomButton from "../components/customButton";
-import dummyRideRequests from "../components/dummyRideData";
+import dummyRideRequests from "../components/DummyRideData";
 import { styles as rideRequestStyles } from "./rideRequestDetailsStyles"; // Import the styles
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
 import { connect } from "react-redux";
 import { updateRideRequestStatus } from "../redux/actions/rideRequestActions";
 
 const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
-  const { requestId } = route.params;
-  const navigation = useNavigation(); // Initialize navigation
+  const { requestId, pickupAddress, destinationAddress } = route.params;
+  const navigation = useNavigation();
 
   const rideRequest = dummyRideRequests.find(
     (request) => request.id === requestId
@@ -57,15 +57,17 @@ const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
         <View style={rideRequestStyles.textContainer}>
           <Text style={rideRequestStyles.label}>PickUp:</Text>
           <Text style={rideRequestStyles.info}>
-            {rideRequest.pickupLocation.latitude},{" "}
-            {rideRequest.pickupLocation.longitude}
+            {/* {rideRequest.pickupLocation.latitude},{" "}
+            {rideRequest.pickupLocation.longitude} */}
+            {pickupAddress}
           </Text>
         </View>
         <View style={rideRequestStyles.textContainer}>
           <Text style={rideRequestStyles.label}>Destination:</Text>
           <Text style={rideRequestStyles.info}>
-            {rideRequest.destination.latitude},{" "}
-            {rideRequest.destination.longitude}
+            {/* {rideRequest.destination.latitude},{" "}
+            {rideRequest.destination.longitude} */}
+            {destinationAddress}
           </Text>
         </View>
       </View>
