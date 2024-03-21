@@ -1,10 +1,3 @@
-// import React from "react";
-// import Navigation from "./navigation/Navigation"; // Update the path accordingly
-
-// export default function App() {
-//   return <Navigation />;
-// }
-
 import React from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";

@@ -56,7 +56,6 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
               />
             </Marker>
 
-            {/* Marker for current location */}
             <Marker
               key={`currentLocation_${request.id}`}
               coordinate={{ latitude: 37.78125, longitude: -122.445 }} // Replace with your mock location
