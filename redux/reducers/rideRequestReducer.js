@@ -9,6 +9,16 @@ const rideRequestReducer = (state = initialState, action) => {
         ...state,
         rideRequests: action.payload,
       };
+    case "UPDATE_RIDE_REQUEST_STATUS":
+      return {
+        ...state,
+        rideRequests: state.rideRequests.map((request) =>
+          request.id === action.payload.requestId
+            ? { ...request, status: action.payload.newStatus }
+            : request
+        ),
+      };
+
     default:
       return state;
   }

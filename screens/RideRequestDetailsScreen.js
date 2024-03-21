@@ -4,8 +4,10 @@ import CustomButton from "../components/customButton";
 import dummyRideRequests from "../components/dummyRideData";
 import { styles as rideRequestStyles } from "./rideRequestDetailsStyles"; // Import the styles
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
+import { connect } from "react-redux";
+import { updateRideRequestStatus } from "../redux/actions/rideRequestActions";
 
-const RideRequestDetailsScreen = ({ route }) => {
+const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
   const { requestId } = route.params;
   const navigation = useNavigation(); // Initialize navigation
 
@@ -17,6 +19,7 @@ const RideRequestDetailsScreen = ({ route }) => {
 
   const handleAcceptBooking = () => {
     setModalVisible(true);
+    updateRideRequestStatus(requestId, "accepted");
   };
 
   const handleGoToMap = () => {
@@ -26,6 +29,7 @@ const RideRequestDetailsScreen = ({ route }) => {
 
   const handleDecline = () => {
     setModalVisible(false);
+    updateRideRequestStatus(requestId, "declined");
   };
 
   return (
@@ -99,4 +103,10 @@ const RideRequestDetailsScreen = ({ route }) => {
   );
 };
 
-export default RideRequestDetailsScreen;
+const mapStateToProps = (state) => ({
+  rideRequests: state.rideRequest.rideRequests,
+});
+
+export default connect(mapStateToProps, { updateRideRequestStatus })(
+  RideRequestDetailsScreen
+);
