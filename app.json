@@ -3,8 +3,10 @@
     "name": "RideSharing",
     "slug": "RideSharing",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/splashLogo.png",
+      "resizeMode": "contain"
+    }
   }
 }
