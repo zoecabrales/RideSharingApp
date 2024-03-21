@@ -15,7 +15,8 @@ Steps to run project
 
 4. Run project
   - expo start
-  - if you get a warning due to SDK issues you can run "npx expo start"
+  - if you get a warning due to SDK issues you can run "npm run es"
+  short script that has been to the package.json instead of typing npx expo start which is obviously longer
 
 5. Its best advisable to have your iOS simulator or Android emulator up and running
   - once Metro bundler is up and running press "i" to to install Expo Go app in iOS simulator and wait until app successfully builds

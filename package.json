@@ -6,7 +6,9 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "es": "npx expo start"
+    
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
