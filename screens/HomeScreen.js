@@ -1,13 +1,6 @@
+// HomeScreen.js
 import React, { useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  StatusBar,
-} from "react-native";
+import { View, TextInput, StatusBar } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
@@ -15,13 +8,11 @@ import {
   faMapMarkerAlt,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import dummyRideRequests from "../components/DummyRideData"; // Import dummy ride data
-import { useNavigation } from "@react-navigation/native";
-
 import { connect } from "react-redux";
 import { setRideRequests } from "../redux/actions/rideRequestActions";
-
-const { width, height } = Dimensions.get("window");
+import { useNavigation } from "@react-navigation/native";
+import { homeScreenStyles } from "./homeScreenStyles"; // Import the styles
+import dummyRideRequests from "../components/DummyRideData"; // Import dummy ride data
 
 const HomeScreen = ({
   rideRequests,
@@ -44,20 +35,23 @@ const HomeScreen = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={homeScreenStyles.container}>
       <StatusBar hidden={true} />
-      <View style={styles.searchContainer}>
-        <TouchableOpacity style={styles.searchIconContainer}>
-          <FontAwesomeIcon icon={faSearch} color="gray" size={20} />
-        </TouchableOpacity>
+      <View style={homeScreenStyles.searchContainer}>
+        <FontAwesomeIcon
+          icon={faSearch}
+          color="gray"
+          size={20}
+          style={homeScreenStyles.searchIconContainer}
+        />
         <TextInput
-          style={styles.searchInput}
+          style={homeScreenStyles.searchInput}
           placeholder="Type a location for nearby bookings"
         />
       </View>
       <MapView
         darkModeAllowed={false}
-        style={styles.map}
+        style={homeScreenStyles.map}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
@@ -99,40 +93,6 @@ const HomeScreen = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  map: {
-    width: width,
-    height: height,
-  },
-  searchContainer: {
-    position: "absolute",
-    top: 60,
-    left: 20,
-    right: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    zIndex: 1,
-    elevation: 5,
-    borderRadius: 50,
-    opacity: 0.9,
-  },
-  searchIconContainer: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-  },
-});
 
 const mapStateToProps = (state) => ({
   rideRequests: state.rideRequest.rideRequests,
