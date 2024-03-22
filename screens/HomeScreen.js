@@ -1,4 +1,3 @@
-// HomeScreen.js
 import React, { useEffect } from "react";
 import { View, TextInput, StatusBar, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
@@ -13,8 +12,9 @@ import { setRideRequests } from "../redux/actions/rideRequestActions";
 import { useNavigation } from "@react-navigation/native";
 import { homeScreenStyles } from "./homeScreenStyles";
 import dummyRideRequests from "../components/DummyRideData";
+import { selectDriverLocation } from "../redux/selectors/driverSelectors";
 
-const HomeScreen = ({ rideRequests, setRideRequests }) => {
+const HomeScreen = ({ rideRequests, setRideRequests, driverLocation }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -78,6 +78,16 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
             longitudeDelta: 0.0421,
           }}
         >
+          <Marker
+            coordinate={{
+              latitude: driverLocation.latitude,
+              longitude: driverLocation.longitude,
+            }}
+            title="Driver Location"
+            description="This is your current location"
+          >
+            <FontAwesomeIcon icon={faMapMarkerAlt} color="green" size={30} />
+          </Marker>
           {rideRequests.map((request, index) => (
             <React.Fragment key={`markerGroup_${index}`}>
               <Marker
@@ -99,7 +109,11 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
 
               <Marker
                 key={`currentLocation_${request.id}`}
-                coordinate={{ latitude: 37.78125, longitude: -122.445 }} // Replace with your mock location
+                // coordinate={{ latitude: 37.78125, longitude: -122.445 }}
+                coordinate={{
+                  latitude: driverLocation.latitude,
+                  longitude: driverLocation.longitude,
+                }}
                 title="Current Location"
                 description="This is your current location"
               >
@@ -119,6 +133,8 @@ const HomeScreen = ({ rideRequests, setRideRequests }) => {
 
 const mapStateToProps = (state) => ({
   rideRequests: state.rideRequest.rideRequests,
+  driverLocation: selectDriverLocation(state), // Provide default value
 });
 
+// Connect the component with Redux, using mapStateToProps
 export default connect(mapStateToProps, { setRideRequests })(HomeScreen);
