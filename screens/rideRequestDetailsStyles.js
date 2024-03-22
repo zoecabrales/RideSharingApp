@@ -1,39 +1,59 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, StatusBar } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     padding: 20,
+    ...Platform.select({
+      ios: {
+        marginTop: StatusBar.currentHeight + (Platform.OS === "ios" ? 30 : 0),
+      },
+      android: {
+        marginTop: StatusBar.currentHeight,
+      },
+    }),
   },
-  screenTitle: {
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  headerTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 5,
-    marginTop: 10,
+    marginLeft: 10,
+    color: "#0077CC",
+  },
+  screenTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginTop: 30,
+    color: "#0077CC",
+    textAlign: "center",
   },
   note: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#888",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 50,
   },
   infoContainer: {
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 20,
+    padding: 20,
+    marginBottom: 200,
   },
   textContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5,
+    marginBottom: 15,
   },
   label: {
     fontWeight: "bold",
     marginRight: 10,
+    color: "#0077CC",
   },
   info: {
     fontSize: 16,
@@ -49,7 +69,7 @@ export const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 40,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -61,12 +81,17 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 50,
     textAlign: "center",
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "100%",
+    width: "85%",
+  },
+  customButton: {
+    marginHorizontal: 40,
+    height: 40,
+    width: "auto",
   },
 });

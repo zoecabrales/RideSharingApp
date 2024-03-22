@@ -19,6 +19,7 @@ const Navigation = () => {
         <Stack.Screen
           name="RideRequestDetails"
           component={RideRequestDetailsScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
