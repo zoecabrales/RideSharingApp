@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Modal } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import CustomButton from "../components/customButton";
 import { styles as rideRequestStyles } from "./rideRequestDetailsStyles";
 import { useNavigation } from "@react-navigation/native";
@@ -30,12 +32,16 @@ const RideRequestDetailsScreen = ({
     updateRideRequestStatus(requestId, "declined");
   };
 
-  // useEffect(() => {
-  //   // Fetch the updated ride request here if needed
-  // }, [rideRequest]);
-
   return (
     <View style={rideRequestStyles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={rideRequestStyles.header}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} size={20} color="#0077CC" />
+        <Text style={rideRequestStyles.headerTitle}>Ride Details</Text>
+      </TouchableOpacity>
+
       <Text style={rideRequestStyles.screenTitle}>
         Accept a booking right away!
       </Text>
@@ -57,11 +63,11 @@ const RideRequestDetailsScreen = ({
           <Text style={rideRequestStyles.info}>{rideRequest.status}</Text>
         </View>
         <View style={rideRequestStyles.textContainer}>
-          <Text style={rideRequestStyles.label}>PickUp:</Text>
+          <Text style={rideRequestStyles.label}>Pickup:</Text>
           <Text style={rideRequestStyles.info}>{pickupAddress}</Text>
         </View>
         <View style={rideRequestStyles.textContainer}>
-          <Text style={rideRequestStyles.label}>Destination:</Text>
+          <Text style={rideRequestStyles.label}>Destination: </Text>
           <Text style={rideRequestStyles.info}>{destinationAddress}</Text>
         </View>
       </View>
@@ -70,6 +76,7 @@ const RideRequestDetailsScreen = ({
         disabled={rideRequest.status !== "pending"}
         title="Accept Booking"
         backgroundColor="#0077CC"
+        customStyle={rideRequestStyles.customButton}
       />
       {/* Modal component */}
       <Modal
@@ -82,7 +89,7 @@ const RideRequestDetailsScreen = ({
         <View style={rideRequestStyles.modalCenteredView}>
           <View style={rideRequestStyles.modalView}>
             <Text style={rideRequestStyles.modalText}>
-              You have successfully accepted the booking!
+              You have successfully{"\n"} accepted the booking!
             </Text>
             <View style={rideRequestStyles.buttonContainer}>
               <CustomButton
