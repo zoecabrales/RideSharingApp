@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Modal } from "react-native";
 import CustomButton from "../components/customButton";
-import dummyRideRequests from "../components/DummyRideData";
-import { styles as rideRequestStyles } from "./rideRequestDetailsStyles"; // Import the styles
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
+import { styles as rideRequestStyles } from "./rideRequestDetailsStyles";
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { updateRideRequestStatus } from "../redux/actions/rideRequestActions";
 
-const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
+const RideRequestDetailsScreen = ({
+  route,
+  rideRequest,
+  updateRideRequestStatus,
+}) => {
   const { requestId, pickupAddress, destinationAddress } = route.params;
   const navigation = useNavigation();
-
-  const rideRequest = dummyRideRequests.find(
-    (request) => request.id === requestId
-  );
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleAcceptBooking = () => {
@@ -31,6 +29,10 @@ const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
     setModalVisible(false);
     updateRideRequestStatus(requestId, "declined");
   };
+
+  // useEffect(() => {
+  //   // Fetch the updated ride request here if needed
+  // }, [rideRequest]);
 
   return (
     <View style={rideRequestStyles.container}>
@@ -56,19 +58,11 @@ const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
         </View>
         <View style={rideRequestStyles.textContainer}>
           <Text style={rideRequestStyles.label}>PickUp:</Text>
-          <Text style={rideRequestStyles.info}>
-            {/* {rideRequest.pickupLocation.latitude},{" "}
-            {rideRequest.pickupLocation.longitude} */}
-            {pickupAddress}
-          </Text>
+          <Text style={rideRequestStyles.info}>{pickupAddress}</Text>
         </View>
         <View style={rideRequestStyles.textContainer}>
           <Text style={rideRequestStyles.label}>Destination:</Text>
-          <Text style={rideRequestStyles.info}>
-            {/* {rideRequest.destination.latitude},{" "}
-            {rideRequest.destination.longitude} */}
-            {destinationAddress}
-          </Text>
+          <Text style={rideRequestStyles.info}>{destinationAddress}</Text>
         </View>
       </View>
       <CustomButton
@@ -109,9 +103,14 @@ const RideRequestDetailsScreen = ({ route, updateRideRequestStatus }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  rideRequests: state.rideRequest.rideRequests,
-});
+const mapStateToProps = (state, ownProps) => {
+  const requestId = ownProps.route.params.requestId;
+  return {
+    rideRequest: state.rideRequest.rideRequests.find(
+      (request) => request.id === requestId
+    ),
+  };
+};
 
 export default connect(mapStateToProps, { updateRideRequestStatus })(
   RideRequestDetailsScreen
