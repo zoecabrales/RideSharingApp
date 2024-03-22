@@ -1,5 +1,23 @@
 const initialState = {
   rideRequests: [],
+  driver: {
+    location: {
+      latitude: 37.78125,
+      longitude: -122.445,
+    },
+  },
+};
+
+const driverReducer = (state = { location: {} }, action) => {
+  switch (action.type) {
+    case "SET_DRIVER_LOCATION":
+      return {
+        ...state,
+        location: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 const rideRequestReducer = (state = initialState, action) => {
